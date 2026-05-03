@@ -1,24 +1,16 @@
-name: CI/CD Deploy
+name: CI/CD Simple Deploy
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_KEY }}
-          script: |
-            cd /var/www/html
-            sudo rm -rf *
-            git clone https://github.com/salan2022/dev-demo.git .
+      - name: Show files
+        run: ls -la
