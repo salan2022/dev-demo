@@ -1,4 +1,4 @@
-name: CI/CD Simple Deploy
+name: Docker CI/CD
 
 on:
   push:
@@ -12,5 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Show files
-        run: ls -la
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build image
+        run: docker build -t hadidevops/dev-demo .
+
+      - name: Push image
+        run: docker push hadidevops/dev-demo
